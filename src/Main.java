@@ -19,12 +19,14 @@ public class Main {
 		
 		for(File f : everyExceptionFile) {
 			
-			//String name = getName(f);
+			String name = getName(f);
 			String imp = getImport(f);
 			String html = getHtml(f);
-			String description = getDescriptionFromHtml(html);
+			//String description = getDescriptionFromHtml(html);
 			
-			writer.println(imp + ",\"" + description + "\"");
+			String url = getUrl(f);
+			
+			writer.println(imp + "," + name + ",\"" + url + "\"");
 			//System.out.println(imp + "," + name + "," + description);
 			
 		}
@@ -32,6 +34,17 @@ public class Main {
 		writer.close();
 		
 
+	}
+
+	private static String getUrl(File f) {
+		String baseUrl = "https://docs.oracle.com/javase/8/docs/api/";
+		String result = f.getAbsolutePath();
+		result = result.replace("C:\\Users\\eric\\eclipse-workspace\\JavaDocToSpreadSheet\\javadoc\\", "");
+		result = result.replace("\\", "/");
+		result = baseUrl + result;
+		
+		
+		return result;
 	}
 
 	private static String getHtml(File f) throws IOException {
